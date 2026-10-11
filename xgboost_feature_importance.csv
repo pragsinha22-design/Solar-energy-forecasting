@@ -1,0 +1,15 @@
+feature,importance
+ac_power,0.49664116
+target_hour_cos,0.2158847
+hour,0.10956307
+target_hour_sin,0.0907047
+poa_irradiance,0.03198155
+power_lag_1,0.017458448
+month,0.007072124
+ambient_temperature,0.006991246
+power_lag_2,0.0053177294
+wind_direction,0.0044439356
+wind_speed,0.0042732903
+power_lag_4,0.0038954122
+day,0.0031196354
+day_of_week,0.0026529778

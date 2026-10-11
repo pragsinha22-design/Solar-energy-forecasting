@@ -1,0 +1,64 @@
+Rows: 67183   Local range: 2024-02-01 00:15:00 -> 2025-12-31 23:45:00
+Descriptive statistics:
+       ac_power  ambient_temperature  wind_speed  wind_direction  poa_irradiance
+count  67183.00             67143.00    67151.00        67151.00        66757.00
+mean     155.13                62.58        5.37          174.27          231.71
+std      224.69                14.80        3.81           90.51          334.36
+min        0.00                28.50        1.00            0.00            0.00
+25%        0.00                51.20        2.70          117.00            0.00
+50%        0.00                60.20        4.10          146.00            5.00
+75%      305.28                73.00        6.90          237.00          441.07
+max      707.84               105.60       25.70          360.00         1277.27
+
+[1] AC power over time
+  saved 01_ac_power_over_time.png
+  Highest-average month: 5 (205.7); lowest: 12 (68.8)
+  Monthly mean ac_power: 1:144, 2:128, 3:163, 4:194, 5:206, 6:195, 7:190, 8:170, 9:154, 10:143, 11:99, 12:69
+  Maximum 15-min value: 707.84 at 2025-02-08 11:45:00
+  saved 02_power_vs_irradiance.png
+[2] Pearson correlation ac_power vs poa_irradiance (all rows): 0.974
+  saved 03_power_vs_temperature.png
+[3] Pearson correlation ac_power vs ambient_temperature (all rows): 0.351
+  saved 04_power_vs_wind_speed.png
+[4] Pearson correlation ac_power vs wind_speed (all rows): 0.040
+  Daytime rows (poa_irradiance > 50): 28537 of 67183
+  Daytime correlation power~temperature: 0.203
+  Daytime correlation power~wind_speed:  0.031
+  Daytime correlation power~irradiance:  0.931
+  Daytime correlation temperature~irradiance: 0.274
+  Rows with irradiance > 800: 8123; corr(ratio power/irradiance, temperature) = -0.353
+
+[5] Average power by hour of day (local time)
+  saved 05_avg_power_by_hour.png
+  Peak hour: 12:00 with mean 517.7
+  Hours with mean power > 1: 6:00 to 19:59
+
+[6] Correlation heatmap
+  saved 06_correlation_heatmap.png
+  All rows:
+                     ac_power  ambient_temperature  wind_speed  wind_direction  poa_irradiance
+ac_power                1.000                0.351       0.040          -0.021           0.974
+ambient_temperature     0.351                1.000       0.077          -0.236           0.382
+wind_speed              0.040                0.077       1.000           0.132           0.030
+wind_direction         -0.021               -0.236       0.132           1.000          -0.031
+poa_irradiance          0.974                0.382       0.030          -0.031           1.000
+  Daytime rows:
+                     ac_power  ambient_temperature  wind_speed  wind_direction  poa_irradiance
+ac_power                1.000                0.203       0.031           0.046           0.931
+ambient_temperature     0.203                1.000       0.044          -0.290           0.274
+wind_speed              0.031                0.044       1.000           0.150          -0.014
+wind_direction          0.046               -0.290       0.150           1.000           0.009
+poa_irradiance          0.931                0.274      -0.014           0.009           1.000
+
+[7] Distribution of solar power
+  saved 07_power_distribution.png
+  Share of rows with power exactly 0: 51.0%
+  Rows with power > 0: 32937; mean 316.4, median 316.2, 90th percentile 620.2
+
+[8] Selected days
+  Highest daily total: 2024-05-23  (daily sum of 15-min values = 23619)
+  Median daily total: 2025-01-23  (daily sum of 15-min values = 16205)
+  10th-percentile daily total: 2024-02-20  (daily sum of 15-min values = 5602)
+  Most variable (largest 15-min jumps): 2025-03-17  (daily sum of 15-min values = 12371)
+  saved 08_selected_days.png
+  Complete days available: 682

@@ -1,0 +1,19 @@
+Merged data loaded: (67183, 6)
+Complete 15-min UTC grid: 67199 rows (16 empty rows inserted where the original data had gaps)
+
+Rows removed from modelling (a row can have more than one reason):
+  weather value still missing (gap > 1 hour or end of file): 450
+  weather value was interpolated in preprocessing:           1399
+  power / lag value missing (start of data or around gaps):  28
+  target (power 1h ahead) missing:                           20
+  TOTAL rows removed (union of the reasons):                 1868
+
+Dataset after filtering: 65331 rows x 15 columns (14 features + 1 target)  [2.78% of the grid removed]
+
+Chronological split (no shuffling):
+split           rows   first (local)         last (local)           mean target  % zero
+train          45727   2024-02-01 01:15:00   2025-06-05 19:30:00          169.9   48.8%
+validation      9796   2025-06-05 20:45:00   2025-09-17 16:30:00          169.5   48.7%
+test            9800   2025-09-17 17:45:00   2025-12-31 15:45:00           99.4   56.5%
+purged             8   2025-06-05 19:45:00   2025-09-17 17:30:00           28.2   50.0%
+Rows used for modelling (train+validation+test): 65323; purged boundary rows: 8

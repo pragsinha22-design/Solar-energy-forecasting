@@ -1,0 +1,29 @@
+TEST 1: lags and target re-computed by timestamp lookup
+[PASS] power_lag_1 equals power at (t - 0 days 00:15:00)  -> 0 mismatching rows out of 65331
+[PASS] power_lag_2 equals power at (t - 0 days 00:30:00)  -> 0 mismatching rows out of 65331
+[PASS] power_lag_4 equals power at (t - 0 days 01:00:00)  -> 0 mismatching rows out of 65331
+[PASS] power_1h_ahead equals power at (t + 0 days 01:00:00)  -> 0 mismatching rows out of 65331
+[PASS] ac_power equals power at (t + 0 days 00:00:00)  -> 0 mismatching rows out of 65331
+
+TEST 2: replace everything after a cut-off with random numbers
+[PASS] All input features at times <= cut-off are unchanged by future data  -> 46624 rows compared, 14 features each
+[PASS] Target does change for the last 4 rows before cut-off (expected: it is the future)  -> 4 target values changed
+
+TEST 3: sanity check - the test must catch a deliberately leaky feature
+[PASS] Test 2 method flags a leaky feature (shift(-1)) as leaking
+
+TEST 4: chronological split
+[PASS] Rows are in time order
+[PASS] train ends before validation starts, even counting the 1h-ahead answer  -> train last t=2025-06-06 02:30:00+00:00  validation first t=2025-06-06 03:45:00+00:00
+[PASS] validation ends before test starts, even counting the 1h-ahead answer  -> validation last t=2025-09-17 23:30:00+00:00  test first t=2025-09-18 00:45:00+00:00
+[PASS] No row belongs to two blocks
+
+TEST 5: interpolated weather values
+[PASS] No modelling row contains an interpolated weather value  -> 0 such rows
+[PASS] No missing values in any feature or target
+
+TEST 6: target is not an input
+[PASS] Target column name is not in FEATURE_COLUMNS
+[PASS] No feature is an exact copy of the target  -> []
+
+RESULT: 16 of 16 checks passed

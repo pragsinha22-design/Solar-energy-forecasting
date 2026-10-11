@@ -1,0 +1,94 @@
+======================================================================
+STEP 1: LOAD THE THREE CSV FILES
+======================================================================
+meter      shape: (67191, 2)
+environment shape: (67179, 4)
+irradiance shape: (105787, 2)
+
+======================================================================
+STEP 3: TIMESTAMP ALIGNMENT
+======================================================================
+Meter rows with an ambiguous/non-existent local time (dropped): 8
+  Their local timestamps:
+    2024-11-03 01:00:00
+    2024-11-03 01:15:00
+    2024-11-03 01:30:00
+    2024-11-03 01:45:00
+    2025-11-02 01:00:00
+    2025-11-02 01:15:00
+    2025-11-02 01:30:00
+    2025-11-02 01:45:00
+
+======================================================================
+STEP 4: RESAMPLE IRRADIANCE TO 15 MINUTES
+======================================================================
+Irradiance rows after resampling: 67199
+15-minute slots with no irradiance reading at all: 1770
+
+======================================================================
+STEP 5: MERGE
+======================================================================
+Missing values right after merge (before filling):
+  ambient_temperature   68
+  wind_speed            48
+  wind_direction        48
+  poa_irradiance        1797
+  ac_power              0
+
+======================================================================
+STEP 6: MISSING VALUES
+======================================================================
+Rule: gaps of <= 4 consecutive 15-min steps (1 hour) are filled;
+      longer gaps are NOT filled (left as NaN). ac_power is never filled.
+
+column                  missing before    filled   still missing
+ambient_temperature                 68        28              40
+wind_speed                          48        16              32
+wind_direction                      48        16              32
+poa_irradiance                    1797      1371             426
+
+======================================================================
+STEP 7: FINAL CHECKS
+======================================================================
+Sorted chronologically: True
+Duplicate timestamps:   0
+Time steps between consecutive rows:
+  0 days 00:15:00   67180
+  0 days 02:15:00   2
+Number of gaps larger than 15 min: 2
+  gap of 0 days 02:15:00 ending at 2024-11-03 10:00:00+00:00
+  gap of 0 days 02:15:00 ending at 2025-11-02 10:00:00+00:00
+
+======================================================================
+MERGED DATASET SUMMARY
+======================================================================
+Shape: (67183, 6)
+Columns: ['timestamp', 'timestamp_local', 'ac_power', 'ambient_temperature', 'wind_speed', 'wind_direction', 'poa_irradiance']
+Date range (UTC):   2024-02-01 08:15:00+00:00  ->  2026-01-01 07:45:00+00:00
+Date range (local): 2024-02-01 00:15:00  ->  2025-12-31 23:45:00
+
+Remaining missing values per column:
+  timestamp_local       0
+  ac_power              0
+  ambient_temperature   40
+  wind_speed            32
+  wind_direction        32
+  poa_irradiance        426
+Rows with at least one missing value: 434 of 67183 (0.65%)
+
+Where the remaining missing values are (consecutive blocks):
+  ambient_temperature   2024-07-02 11:00:00+00:00  ->  2024-07-02 12:45:00+00:00   (8 rows)
+  ambient_temperature   2026-01-01 00:00:00+00:00  ->  2026-01-01 07:45:00+00:00   (32 rows)
+  wind_speed            2026-01-01 00:00:00+00:00  ->  2026-01-01 07:45:00+00:00   (32 rows)
+  wind_direction        2026-01-01 00:00:00+00:00  ->  2026-01-01 07:45:00+00:00   (32 rows)
+  poa_irradiance        2024-04-17 16:00:00+00:00  ->  2024-04-17 19:45:00+00:00   (16 rows)
+  poa_irradiance        2024-07-16 21:15:00+00:00  ->  2024-07-16 22:45:00+00:00   (7 rows)
+  poa_irradiance        2024-10-18 00:00:00+00:00  ->  2024-10-19 19:00:00+00:00   (173 rows)
+  poa_irradiance        2024-11-06 06:45:00+00:00  ->  2024-11-07 16:30:00+00:00   (136 rows)
+  poa_irradiance        2024-11-12 12:45:00+00:00  ->  2024-11-12 15:15:00+00:00   (11 rows)
+  poa_irradiance        2025-05-24 21:15:00+00:00  ->  2025-05-25 02:00:00+00:00   (20 rows)
+  poa_irradiance        2025-05-25 11:15:00+00:00  ->  2025-05-25 14:30:00+00:00   (14 rows)
+  poa_irradiance        2025-08-26 16:00:00+00:00  ->  2025-08-26 17:30:00+00:00   (7 rows)
+  poa_irradiance        2025-08-26 18:00:00+00:00  ->  2025-08-26 19:00:00+00:00   (5 rows)
+  poa_irradiance        2025-08-26 20:00:00+00:00  ->  2025-08-26 21:00:00+00:00   (5 rows)
+  poa_irradiance        2026-01-01 00:00:00+00:00  ->  2026-01-01 07:45:00+00:00   (32 rows)
